@@ -1,7 +1,6 @@
 local httpService = game:GetService('HttpService')
 local ThemeManager = {} do
 	ThemeManager.Folder = 'LinoriaLibSettings'
-	-- if not isfolder(ThemeManager.Folder) then makefolder(ThemeManager.Folder) end
 
 	ThemeManager.Library = nil
 	ThemeManager.BuiltInThemes = {
@@ -21,7 +20,6 @@ local ThemeManager = {} do
 
 		if not data then return end
 
-		-- custom themes are just regular dictionaries instead of an array with { index, dictionary }
 
 		local scheme = data[2]
 		for idx, col in next, customThemeData or scheme do
