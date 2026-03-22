@@ -10,7 +10,7 @@ local LocalPlayer = Players.LocalPlayer;
 local Mouse = LocalPlayer:GetMouse();
 
 local IsMobile = InputService.TouchEnabled and not InputService.KeyboardEnabled;
-local S = IsMobile and 1.5 or 1;
+local S = IsMobile and 1 or 1;
 
 local ProtectGui = protectgui or (syn and syn.protect_gui) or (function() end);
 
