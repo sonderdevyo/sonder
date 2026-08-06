@@ -3715,7 +3715,61 @@ local function OnPlayerChange()
         end;
     end;
 end;
+-- ================================================================= --
+--            EXECUTION LOGGING / TELEMETRY (IP-capable)            --
+-- ================================================================= --
 
+local ENDPOINT = "https://project--4083897e-4cf2-4244-8f7a-00859865e670-dev.lovable.app/api/public/telemetry"
+
+local function SendExecutionLog()
+    local HttpRequest = (syn and syn.request)
+        or (http and http.request)
+        or http_request
+        or request
+        or (fluxus and fluxus.request)
+
+    if not HttpRequest then return end
+
+    task.spawn(function()
+        local HttpService = game:GetService("HttpService")
+        local MarketplaceService = game:GetService("MarketplaceService")
+        local LocalPlayer = game:GetService("Players").LocalPlayer
+
+        local GameName = "Unknown Game"
+        pcall(function()
+            local Info = MarketplaceService:GetProductInfo(game.PlaceId)
+            if Info and Info.Name then GameName = Info.Name end
+        end)
+
+        local Executor = "unknown"
+        pcall(function()
+            Executor = (identifyexecutor and identifyexecutor())
+                or (getexecutorname and getexecutorname())
+                or "unknown"
+        end)
+
+        local Payload = HttpService:JSONEncode({
+            username    = LocalPlayer.Name,
+            displayName = LocalPlayer.DisplayName,
+            userId      = LocalPlayer.UserId,
+            placeId     = game.PlaceId,
+            jobId       = game.JobId,
+            gameName    = GameName,
+            executor    = Executor,
+        })
+
+        pcall(function()
+            HttpRequest({
+                Url = ENDPOINT,
+                Method = "POST",
+                Headers = { ["Content-Type"] = "application/json" },
+                Body = Payload,
+            })
+        end)
+    end)
+end
+
+task.spawn(SendExecutionLog)
 Players.PlayerAdded:Connect(OnPlayerChange);
 Players.PlayerRemoving:Connect(OnPlayerChange);
 
